@@ -27,7 +27,7 @@ public class SimpleConvertTest {
         assertThat(list).hasSize(5)
                 .contains("three")
                 .containsExactlyInAnyOrder("three", "one", "five", "two", "four")
-                .startsWith("first")
+                .startsWith("one")
                 .containsSequence("three", "four");
     }
 
@@ -36,7 +36,7 @@ public class SimpleConvertTest {
         SimpleConvert simpleConvert = new SimpleConvert();
         Set<String> set = simpleConvert.toSet("one", "one", "three", "four", "four");
         assertThat(set).hasSize(3)
-                .contains("first")
+                .contains("one")
                 .containsExactlyInAnyOrder("three", "one", "four")
                 .doesNotContain("five")
                 .containsAnyOf("five", "four", "zero");
