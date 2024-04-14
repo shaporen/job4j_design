@@ -62,7 +62,7 @@ public class SimpleArrayList<T> implements SimpleList<T> {
             @Override
             public boolean hasNext() {
                 if (modCount != expectedModCount) {
-                    throw new ConcurrentModificationException("can't");
+                    throw new ConcurrentModificationException("cannot be changed during iteration");
                 }
                 return index < size;
             }
@@ -70,7 +70,7 @@ public class SimpleArrayList<T> implements SimpleList<T> {
             @Override
             public T next() {
                 if (!hasNext()) {
-                    throw new NoSuchElementException("can't");
+                    throw new NoSuchElementException("collection doesn't have the following element");
                 }
                 return container[index++];
             }
