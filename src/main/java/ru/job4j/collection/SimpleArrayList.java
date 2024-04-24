@@ -55,9 +55,9 @@ public class SimpleArrayList<T> implements SimpleList<T> {
 
     @Override
     public Iterator<T> iterator() {
-        return new Iterator<T>() {
+        return new Iterator<>() {
             private int index = 0;
-            private int expectedModCount = modCount;
+            private final int expectedModCount = modCount;
 
             @Override
             public boolean hasNext() {
@@ -70,7 +70,8 @@ public class SimpleArrayList<T> implements SimpleList<T> {
             @Override
             public T next() {
                 if (!hasNext()) {
-                    throw new NoSuchElementException("collection doesn't have the following element");
+                    throw new NoSuchElementException("collection "
+                            + "doesn't have the following element");
                 }
                 return container[index++];
             }
