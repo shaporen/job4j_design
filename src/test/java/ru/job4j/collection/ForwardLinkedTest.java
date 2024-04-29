@@ -10,29 +10,29 @@ public class ForwardLinkedTest {
     @BeforeEach
     public void initData() {
         list = new ForwardLinked<>();
-        list.add(1);
-        list.add(2);
+        list.addLast(1);
+        list.addLast(2);
     }
 
     @Test
     void checkIteratorSimple() {
         assertThat(list).hasSize(2);
-        list.add(3);
-        list.add(4);
+        list.addLast(3);
+        list.addLast(4);
         assertThat(list).hasSize(4);
     }
 
     @Test
     void checkAdd() {
         assertThat(list).containsExactly(1, 2);
-        list.add(3);
+        list.addLast(3);
         assertThat(list).containsExactly(1, 2, 3);
     }
 
     @Test
     void whenAddAndGet() {
-        list.add(3);
-        list.add(4);
+        list.addLast(3);
+        list.addLast(4);
         assertThat(list.get(0)).isEqualTo(1);
         assertThat(list.get(1)).isEqualTo(2);
         assertThat(list.get(2)).isEqualTo(3);
@@ -54,7 +54,7 @@ public class ForwardLinkedTest {
     @Test
     void whenAddAndDeleteFirstThenOk() {
         assertThat(list).containsExactly(1, 2);
-        list.add(3);
+        list.addLast(3);
         assertThat(list).containsExactly(1, 2, 3);
         assertThat(list.deleteFirst()).isEqualTo(1);
         assertThat(list).containsExactly(2, 3);
@@ -80,7 +80,7 @@ public class ForwardLinkedTest {
     void whenHasIteratorAndAddThenHasNextExceptionThrown() {
         Iterator<Integer> iterator = list.iterator();
         assertThat(iterator.hasNext()).isTrue();
-        list.add(3);
+        list.addLast(3);
         assertThatThrownBy(iterator::hasNext)
                 .isInstanceOf(ConcurrentModificationException.class);
     }
@@ -89,7 +89,7 @@ public class ForwardLinkedTest {
     void whenHasIteratorAndAddThenNextExceptionThrown() {
         Iterator<Integer> iterator = list.iterator();
         assertThat(iterator.hasNext()).isTrue();
-        list.add(3);
+        list.addLast(3);
         assertThatThrownBy(iterator::next)
                 .isInstanceOf(ConcurrentModificationException.class);
     }
