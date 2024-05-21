@@ -15,16 +15,15 @@ public class NonCollisionMap<K, V> implements SimpleMap<K, V> {
 
     @Override
     public boolean put(K key, V value) {
-        if (count >= capacity * LOAD_FACTOR) {
-            expand();
-        }
-        boolean result = false;
-        int index = key == null ? 0 : indexFor(hash(key.hashCode()));
-        if (table[index] == null) {
+        int index = getIndexByKey(key);
+        boolean result = table[index] == null;
+        if (result) {
             table[index] = new MapEntry<>(key, value);
-            result = true;
             count++;
             modCount++;
+            if (count >= capacity * LOAD_FACTOR) {
+                expand();
+            }
         }
         return result;
     }
@@ -45,38 +44,37 @@ public class NonCollisionMap<K, V> implements SimpleMap<K, V> {
         modCount = 0;
         for (MapEntry<K, V> pair : oldTable) {
             if (pair != null) {
-                table[getIndex(pair.key)] = pair;
+                table[getIndexByKey(pair.key)] = pair;
                 count++;
                 modCount++;
             }
         }
     }
 
-    private int getIndex(K key) {
-        return key == null ? 0 : indexFor(hash(key.hashCode()));
+    private int getIndexByKey(K key) {
+        return indexFor(hash(Objects.hashCode(key)));
     }
 
-    private boolean notNullAndEquals(int index, K key) {
-        return table[index] != null && Objects.equals(table[index].key, key);
+    private boolean checkKey(int index, K key) {
+        return table[index] != null
+                && Objects.hashCode(table[index].key) == Objects.hashCode(key)
+                && Objects.equals(table[index].key, key);
     }
 
     @Override
     public V get(K key) {
         V value = null;
-        int index = getIndex(key);
-        if (notNullAndEquals(index, key)) {
-            value = table[index].value;
+        if (checkKey(getIndexByKey(key), key)) {
+            value = table[getIndexByKey(key)].value;
         }
         return value;
     }
 
     @Override
     public boolean remove(K key) {
-        boolean result = false;
-        int index = getIndex(key);
-        if (notNullAndEquals(index, key)) {
-            table[index] = null;
-            result = true;
+        boolean result = checkKey(getIndexByKey(key), key);
+        if (result) {
+            table[getIndexByKey(key)] = null;
             count--;
             modCount++;
         }
@@ -94,10 +92,10 @@ public class NonCollisionMap<K, V> implements SimpleMap<K, V> {
                 if (expectedModCount != modCount) {
                     throw new ConcurrentModificationException();
                 }
-                while (index < table.length && table[index] == null) {
+                while (index < capacity && table[index] == null) {
                     index++;
                 }
-                return index < table.length;
+                return index < capacity;
             }
 
             @Override
