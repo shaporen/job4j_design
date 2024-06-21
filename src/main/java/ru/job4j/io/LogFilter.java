@@ -28,8 +28,9 @@ public class LogFilter {
 
     public void saveTo(String out) {
         var data = filter();
-        try (PrintWriter writer = new PrintWriter(new BufferedOutputStream(
-                new FileOutputStream(out)))) {
+        try (PrintWriter writer = new PrintWriter(
+                new BufferedOutputStream(
+                        new FileOutputStream(out)))) {
             data.forEach(writer::println);
         } catch (IOException e) {
             e.printStackTrace();
