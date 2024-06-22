@@ -9,13 +9,10 @@ public class Analysis {
             boolean isWork = true;
             for (String line = reader.readLine(); line != null; line = reader.readLine()) {
                 String[] parts = line.split(" ");
-                if (isWork && validError(parts[0])) {
-                    isWork = false;
-                    writer.write(String.format("%s;", parts[1]));
-                } else if (!isWork && !validError(parts[0])) {
-                    isWork = true;
-                    writer.write(String.format("%s", parts[1]));
-                    writer.write(System.lineSeparator());
+                if (isWork == validError(parts[0])) {
+                    isWork = !isWork;
+                    writer.write(String.format("%s%s", parts[1],
+                            !isWork ? ";" : System.lineSeparator()));
                 }
             }
         } catch (IOException e) {
