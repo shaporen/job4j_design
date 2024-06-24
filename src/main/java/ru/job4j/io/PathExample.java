@@ -7,7 +7,7 @@ import java.nio.file.attribute.*;
 public class PathExample {
     public static void main(String[] args) throws IOException {
         Path file = Path.of("Attributes.txt");
-        //Files.createFile(file);
+        Files.createFile(file);
         BasicFileAttributeView attrView = Files.getFileAttributeView(file,
                 BasicFileAttributeView.class);
         BasicFileAttributes attributes = attrView.readAttributes();
