@@ -52,9 +52,10 @@ public class Zip {
 
     public static void main(String[] args) throws IOException {
         validateArgs(args);
-        String source = ArgsName.of(args).get("d");
-        String exclude = ArgsName.of(args).get("e");
-        String target = ArgsName.of(args).get("o");
+        ArgsName values = ArgsName.of(args);
+        String source = values.get("d");
+        String exclude = values.get("e");
+        String target = values.get("o");
         List<Path> sources = Search.search(Path.of(source),
                 path -> !path.toFile().getName().endsWith(exclude));
         Zip zip = new Zip();
