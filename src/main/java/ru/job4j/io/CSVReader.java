@@ -88,5 +88,3 @@ public class CSVReader {
         handle(argsName);
     }
 }
-
-//-path=file.csv -delimiter=;  -out=stdout -filter=name,age
