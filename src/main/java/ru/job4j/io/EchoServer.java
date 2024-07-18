@@ -2,8 +2,12 @@ package ru.job4j.io;
 
 import java.io.*;
 import java.net.*;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class EchoServer {
+    private static final Logger LOG = LoggerFactory.getLogger(EchoServer.class.getName());
+
     public static void main(String[] args) {
         try (ServerSocket server = new ServerSocket(9000)) {
             while (!server.isClosed()) {
@@ -27,7 +31,7 @@ public class EchoServer {
                 }
             }
         } catch (IOException e) {
-            throw new RuntimeException(e);
+            LOG.error("Exception", e);
         }
     }
 }
