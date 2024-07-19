@@ -5,7 +5,7 @@ import com.google.gson.*;
 public class Main {
     public static void main(String[] args) {
         final Company company = new Company(true, 5, new Contact("60-59-72"),
-                new String[] {"Trader", "Agroholding", "Elevator"});
+                new String[] {"Trader", "Agroholding"});
 
         final Gson gson = new GsonBuilder().create();
         System.out.println(gson.toJson(company));
@@ -19,7 +19,7 @@ public class Main {
                         + "\"phone\":\"60-59-72\""
                         + "},"
                         + "\"fieldsOfActivity\":"
-                        + "[\"Trader\",\"Agroholding\",\"Elevator\"]"
+                        + "[\"Trader\",\"Agroholding\"]"
                         + "}";
 
         final Company companyMod = gson.fromJson(companyJson, Company.class);
