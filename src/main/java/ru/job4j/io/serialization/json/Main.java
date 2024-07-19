@@ -4,27 +4,25 @@ import com.google.gson.*;
 
 public class Main {
     public static void main(String[] args) {
-        final Person person = new Person(false, 30, new Contact("11-111"),
-                new String[] {"Worker", "Married"});
+        final Company company = new Company(true, 5, new Contact("60-59-72"),
+                new String[] {"Trader", "Agroholding", "Elevator"});
 
-        /* Преобразуем объект person в json-строку. */
         final Gson gson = new GsonBuilder().create();
-        System.out.println(gson.toJson(person));
+        System.out.println(gson.toJson(company));
 
-        /* Создаём новую json-строку с модифицированными данными*/
-        final String personJson =
+        final String companyJson =
                 "{"
-                        + "\"sex\":false,"
-                        + "\"age\":35,"
+                        + "\"active\":true,"
+                        + "\"numberOfBranches\":5,"
                         + "\"contact\":"
                         + "{"
-                        + "\"phone\":\"+7(924)111-111-11-11\""
+                        + "\"phone\":\"60-59-72\""
                         + "},"
-                        + "\"statuses\":"
-                        + "[\"Student\",\"Free\"]"
+                        + "\"fieldsOfActivity\":"
+                        + "[\"Trader\",\"Agroholding\",\"Elevator\"]"
                         + "}";
-        /* Превращаем json-строку обратно в объект */
-        final Person personMod = gson.fromJson(personJson, Person.class);
-        System.out.println(personMod);
+
+        final Company companyMod = gson.fromJson(companyJson, Company.class);
+        System.out.println(companyMod);
     }
 }
