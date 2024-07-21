@@ -1,26 +1,26 @@
 package ru.job4j.io.serialization.json;
 
-import jakarta.xml.bind.*;
-import java.io.*;
+import org.json.*;
+
+import java.util.*;
 
 public class Main {
     public static void main(String[] args) throws Exception {
         final Company company = new Company(true, 5, new Contact("60-59-72"),
                 new String[] {"Trader", "Agroholding"});
 
-        JAXBContext context = JAXBContext.newInstance(Company.class);
-        Marshaller marshaller = context.createMarshaller();
-        marshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, Boolean.TRUE);
-        String xml;
-        try (StringWriter writer = new StringWriter()) {
-            marshaller.marshal(company, writer);
-            xml = writer.getBuffer().toString();
-            System.out.println(xml);
-        }
-        Unmarshaller unmarshaller = context.createUnmarshaller();
-        try (StringReader reader = new StringReader(xml)) {
-            Company result = (Company) unmarshaller.unmarshal(reader);
-            System.out.println(result);
-        }
+        JSONObject jsoncontact = new JSONObject("{\"phone\":\"60-59-72\"}");
+        List<String> list = new ArrayList<>();
+        list.add("Trader");
+        list.add("Agroholding");
+        JSONArray jsonFields = new JSONArray(list);
+        JSONObject jsonObject = new JSONObject();
+        jsonObject.put("active", company.isActive());
+        jsonObject.put("numberOfBranches", company.getNumberOfBranches());
+        jsonObject.put("contact", jsoncontact);
+        jsonObject.put("fieldsOfActivity", jsonFields);
+
+        System.out.println(jsonObject);
+        System.out.println(new JSONObject(company));
     }
 }

@@ -26,6 +26,22 @@ public class Company {
         this.fieldsOfActivity = fieldsOfActivity;
     }
 
+    public boolean isActive() {
+        return active;
+    }
+
+    public int getNumberOfBranches() {
+        return numberOfBranches;
+    }
+
+    public Contact getContact() {
+        return contact;
+    }
+
+    public String[] getFieldsOfActivity() {
+        return fieldsOfActivity;
+    }
+
     @Override
     public String toString() {
         return "Company{"
