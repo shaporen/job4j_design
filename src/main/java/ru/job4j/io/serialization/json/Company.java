@@ -1,12 +1,22 @@
 package ru.job4j.io.serialization.json;
 
+import jakarta.xml.bind.annotation.*;
+
 import java.util.*;
 
+@XmlRootElement(name = "company")
+@XmlAccessorType(XmlAccessType.FIELD)
 public class Company {
-    private final boolean active;
-    private final int numberOfBranches;
-    private final Contact contact;
-    private final String[] fieldsOfActivity;
+    @XmlAttribute
+    private boolean active;
+    @XmlAttribute
+    private int numberOfBranches;
+    private Contact contact;
+    @XmlElementWrapper(name = "fieldsOfActivity")
+    @XmlElement(name = "fieldOfActivity")
+    private String[] fieldsOfActivity;
+
+    public Company() { }
 
     public Company(boolean active, int numberOfBranches, Contact contact,
                    String[] fieldsOfActivity) {
