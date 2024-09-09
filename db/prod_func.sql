@@ -1,4 +1,4 @@
-create table products
+CREATE TABLE products
 (
     id       serial primary key,
     name     varchar(50),
@@ -19,8 +19,7 @@ $$
     end;
 $$;
 
-create
-or replace function f_update_data(u_count integer, tax float, u_id integer)
+create or replace function f_update_data(u_count integer, tax float, u_id integer)
 returns integer
 language 'plpgsql'
 as
@@ -39,7 +38,8 @@ $$
         if tax > 0 THEN
             update products
             set price = price + price * tax;
-            select into result sum(price)
+            select
+            into result sum(price)
             from products;
         end if;
         return result;
